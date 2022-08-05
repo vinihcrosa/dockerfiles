@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.7.0
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      discovery.type: "single-node"
+    volumes:
+      - ./data:/usr/share/elasticsearch/data
+      - ./logs:/usr/share/elasticsearch/logs
+      - ./config:/usr/share/elasticsearch/config
+  
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.7.0
+    ports:
+      - "5601:5601"
+    environment:
+      ELASTICSEARCH_URL: "http://elasticsearch:9200"
+    volumes:
+      - ./data:/usr/share/kibana/data
+      - ./logs:/usr/share/kibana/logs
+      - ./config:/usr/share/kibana/config
+
+volumes:
+  data:
+  logs:
+  config:
