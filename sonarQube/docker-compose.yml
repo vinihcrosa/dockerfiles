@@ -32,6 +32,11 @@ services:
       - SONARQUBE_DATABASE_PASSWORD=sonarqube
     networks:
       - postgres
+    volumes:
+      - sonarqube_data:/bitnami
+volumes:
+  sonarqube_data:
+    driver: local
 
 networks:
   postgres:
