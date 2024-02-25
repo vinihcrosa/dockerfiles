@@ -16,27 +16,24 @@ services:
       - postgres
 
   sonarqube:
-    image: bitnami/sonarqube:latest
+    image: sonarqube:9.9.4-community
     ports:
-      - "9999:9000"
+      - "9000:9000"
     environment:
-      - POSTGRESQL_HOST=postgresql
-      - POSTGRESQL_PORT=5432
-      - POSTGRESQL_ROOT_USER=sonarqube
-      - POSTGRESQL_CLIENT_CREATE_DATABASE_NAME=sonarqube
-      - POSTGRESQL_CLIENT_CREATE_DATABASE_USERNAME=sonarqube
-      - POSTGRESQL_CLIENT_CREATE_DATABASE_PASSWORD=sonarqube
-      - POSTGRESQL_CLIENT_POSTGRES_PASSWORD=sonarqube
-      - SONARQUBE_DATABASE_NAME=sonarqube
-      - SONARQUBE_DATABASE_USER=sonarqube
-      - SONARQUBE_DATABASE_PASSWORD=sonarqube
+      - SONAR_JDBC_URL=jdbc:postgresql://postgresql:5432/sonarqube
+      - SONAR_JDBC_USERNAME=sonarqube
+      - SONAR_JDBC_PASSWORD=sonarqube
     networks:
       - postgres
     volumes:
-      - sonarqube_data:/bitnami
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      - sonarqube_logs:/opt/sonarqube/logs
+
 volumes:
   sonarqube_data:
-    driver: local
+  sonarqube_extensions:
+  sonarqube_logs:
 
 networks:
   postgres:
